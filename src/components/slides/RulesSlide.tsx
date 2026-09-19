@@ -11,7 +11,7 @@ export const RulesSlide: React.FC = () => {
       {/* ── CENTER SECTION: TITLE + 3 RULES CARDS ── */}
       <div className="relative z-10 w-full flex flex-col items-center my-auto max-w-5xl">
         <h2
-          className="font-sans font-bold text-white tracking-normal uppercase slide-enter text-4xl sm:text-5xl md:text-6xl mb-8"
+          className="font-sans font-bold text-white tracking-normal uppercase slide-enter text-4xl sm:text-5xl md:text-6xl pt-2 pb-1 mb-8 overflow-visible"
           style={{ animationDelay: '0.06s' }}
         >
           THỂ LỆ <span className="text-gradient-cyan">GIƠ TAY NHẬN QUÀ</span>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { PerspectiveTilt } from '../Motion3D';
-import { CyberNetworkBg } from '../three/CyberNetworkBg';
+import { CyberNetworkBg } from '../CyberNetworkBg';
 
 export const LobbySlide: React.FC = () => {
   return (

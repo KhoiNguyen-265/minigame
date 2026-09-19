@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { SLIDES, ROUND_1_QUESTIONS, ROUND_2_QUESTIONS } from './data/gameData';
 import { ShortcutHelpModal } from './components/ShortcutHelpModal';
 import { LobbySlide } from './components/slides/LobbySlide';
@@ -10,6 +10,7 @@ import { MusicQuestionSlide } from './components/slides/MusicQuestionSlide';
 import { VictorySlide } from './components/slides/VictorySlide';
 import { SlideTransition } from './components/Motion3D';
 import { sound } from './utils/audio';
+import confetti from 'canvas-confetti';
 import { Maximize, Minimize, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const STORAGE_KEY_SLIDE = 'it_club_battle_slide_v2';
@@ -100,6 +101,34 @@ export const App: React.FC = () => {
   const handleToggleHint = useCallback(() => {
     setShowHint((prev) => !prev);
   }, []);
+
+  // Bắn pháo hoa ăn mừng khi mở đáp án chính xác (2 luồng từ 2 bên góc màn hình)
+  const triggerFireworks = useCallback(() => {
+    confetti({
+      particleCount: 90,
+      angle: 60,
+      spread: 65,
+      origin: { x: 0.05, y: 0.75 },
+      colors: ['#00f2fe', '#10b981', '#f59e0b', '#ffffff'],
+      zIndex: 9999,
+    });
+    confetti({
+      particleCount: 90,
+      angle: 120,
+      spread: 65,
+      origin: { x: 0.95, y: 0.75 },
+      colors: ['#00f2fe', '#10b981', '#f59e0b', '#ffffff'],
+      zIndex: 9999,
+    });
+  }, []);
+
+  // Tự động bắn pháo hoa & phát âm thanh chúc mừng mỗi khi hiện đáp án câu hỏi
+  useEffect(() => {
+    if (isRevealed && (isQuestionSlide || isMusicQuestionSlide)) {
+      triggerFireworks();
+      sound.playCorrect();
+    }
+  }, [isRevealed, isQuestionSlide, isMusicQuestionSlide, triggerFireworks]);
 
   // Toàn màn hình
   const handleToggleFullscreen = useCallback(() => {
